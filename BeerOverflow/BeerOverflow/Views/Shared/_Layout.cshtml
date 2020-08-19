@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @RenderSection("head", required: false)
+    <link runat="server" rel="shortcut icon" href="~/lib/myicon.ico" type="image/x-icon" />
+    <link runat="server" rel="icon" href="~/lib/myicon.ico" type="image/ico" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BeerOverflow</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+    #a:hover {
+        font-size: 150%;
+        color: slategray
+    }
+</style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">       
+          
+            <div class="container">
+                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Firp-cdn.multiscreensite.com%2Ff9babea6%2Fdms3rep%2Fmulti%2Fmobile%2FIcon_beer-500x500.png&f=1&nofb=1" height="50" width="50" />
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BeerOverflow</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Beers" asp-action="Index">Beers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Styles" asp-action="Index">Styles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Breweries" asp-action="Index">Breweries</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="MyPage">MyPage</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a id="a" class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a id="a" class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="AllFlaggedReviews">Flagged Reviews</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a id="a" class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - BeerOverflow - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

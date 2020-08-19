@@ -1,0 +1,96 @@
+﻿@model IEnumerable<BeerViewModel>
+@{
+    ViewData["Title"] = "Beers";
+}
+
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+<style>
+    body {
+        background: url('css/images/brewery.jpeg') fixed center no-repeat;
+        background-size: cover;
+    }
+</style>
+
+@using (Html.BeginForm ("Index","Beers",FormMethod.Get ))
+{
+<b>Search by:</b>
+@Html.TextBox("SearchString");
+<input type="submit" value="Search" />
+ }
+
+<div class="container">
+    <table class="table table-bordered" style="background-color: rgba(0,0,0, 0.4)">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Abv)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Country)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Style)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Abv)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </div>
+                    </td>
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Style)
+                        </div>
+                    </td> 
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Rating)
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" role="button" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-primary" role="button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a class="btn btn-primary" role="button" asp-action="Create">Create New</a>
+    </p>
+}
+

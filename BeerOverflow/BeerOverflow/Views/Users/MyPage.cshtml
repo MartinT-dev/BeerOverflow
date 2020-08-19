@@ -1,0 +1,80 @@
+﻿@model WishListViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+    </dl>
+</div>
+<h4>WishList</h4>
+@if (!Model.WishLists.Any())
+{
+    <h4 class="card-title">
+        No beers added in wishlist yet.
+    </h4>
+}
+else
+{
+    @foreach (var item in Model.WishLists)
+    {
+        <h6 class="card-title">
+            Beer Name: <span style="color:red;">@item.Name</span>
+        </h6>
+        <h6 class="card-title">
+            Beer Brewery: <span style="color:red;">@item.Brewery</span>
+        </h6>
+        <h6 class="card-title">
+            Beer Country: <span style="color:red;">@item.Country</span>
+        </h6>
+        <a class="btn btn-primary" role="button" asp-controller="Beers" asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+        <a class="btn btn-primary" role="button" asp-controller="Users" asp-action="RemoveFromWishList" asp-route-beerId="@item.Id">Remove From Wish List</a>
+    }
+}
+
+
+<h4>DrankList</h4>
+@if (!Model.DrankLists.Any())
+{
+    <h4 class="card-title">
+        No beers added in dranklist yet.
+    </h4>
+}
+else
+{
+    @foreach (var item in Model.DrankLists)
+    {
+
+        <h6 class="card-title">
+            Beer Name: <span style="color:red;">@item.Name</span>
+        </h6>
+        <h6 class="card-title">
+            Beer Brewery: <span style="color:red;">@item.Brewery</span>
+        </h6>
+        <h6 class="card-title">
+            Beer Country: <span style="color:red;">@item.Country</span>
+        </h6>
+        <a class="btn btn-primary" role="button" asp-controller="Beers" asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+        <a class="btn btn-primary" role="button" asp-controller="Users" asp-action="RemoveFromDrankList" asp-route-beerId="@item.Id">Remove From Drank List</a>
+    }
+}
+<br>

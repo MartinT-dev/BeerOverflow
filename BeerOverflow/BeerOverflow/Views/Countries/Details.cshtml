@@ -1,0 +1,50 @@
+﻿@model CountryViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Country</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                   <h2>
+                       Breweries
+                   </h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Breweries)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        <a class="btn btn-primary" role="button" asp-controller="Breweries" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<div>
+    <a class="btn btn-primary" role="button" asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-primary" role="button" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    }
+</div>

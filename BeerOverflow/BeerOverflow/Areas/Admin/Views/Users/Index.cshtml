@@ -1,0 +1,52 @@
+﻿@model IEnumerable<UserAdminViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isBanned)
+            </th>
+           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.isBanned)
+            </td>
+            @if (item.isBanned == true)
+            {
+                <td>
+                    <a class="btn btn-primary" role="button" asp-area = "Admin" asp-controller = "Users" asp-action="UnbanUser" asp-route-userId="@item.Id">Unban</a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a class="btn btn-primary" role="button" asp-area="Admin" asp-controller="Users" asp-action="BanUser" asp-route-userId="@item.Id">Ban</a>
+                </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>

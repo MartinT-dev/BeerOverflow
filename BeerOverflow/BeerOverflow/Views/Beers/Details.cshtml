@@ -1,0 +1,120 @@
+﻿@model BeerViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    p.impact {
+        font-family: Impact, Charcoal, sans-serif;
+    }
+</style>
+
+<h1>Details</h1>
+<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.esellerpro.com%2F2243%2FI%2F418%2F41%2FTRAV148-beer-beach-towel%2520(1).JPG&f=1&nofb=1" height="150" width="150" />
+
+<div>
+    <h4>Beer</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Abv)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Abv)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Brewery)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Brewery)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Style)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Style)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-primary" role="button" asp-action="Review" asp-route-beerId="@Model.Id">Add Review</a>
+        <a class="btn btn-primary" role="button" asp-action="Rate" asp-route-Id="@Model.Id">Rate</a>
+        <a class="btn btn-primary" role="button" asp-controller="Users" asp-action="AddToWishList" asp-route-beerId="@Model.Id">Add To WishList</a>
+        <a class="btn btn-primary" role="button" asp-controller="Users" asp-action="AddToDrankList" asp-route-beerId="@Model.Id">Add To DrankList</a>
+    }
+    <a class="btn btn-primary" role="button" asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-primary" role="button" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    }
+</div>
+<h1 class="text-center">Reviews</h1>
+@if (!Model.Reviews.Any())
+{
+    <h4 class="card-title">
+        No reviews yet.
+    </h4>
+}
+else
+{
+    @foreach (var item in Model.Reviews)
+    {
+
+            <div class="border border-dark">
+                <div class="card-title">
+                    <h2 class="text-center">
+                        @item.Title
+                    </h2>
+                </div>
+
+                <div class="card-title">
+                    <p class="impact text-center">
+                        @item.Text
+                    </p>
+                </div>
+                <div class="card-title">
+                    <p class="text-center">
+                        User: @item.User
+                    </p>
+                </div>
+
+                <div class="card-title text-center">
+                    Liked : @item.Liked Disliked: @item.Disliked
+                </div>
+
+                <div class="text-center">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-primary" role="button" a asp-controller="Beers" asp-action="Like" asp-route-id="@item.Id" asp-route-beerId="@item.BeerId">Like</a> <a class="btn btn-primary" role="button" a asp-controller="Beers" asp-action="Dislike" asp-route-id="@item.Id" asp-route-beerId="@item.BeerId">Dislike</a>
+                        <a class="btn btn-primary" role="button" a asp-controller="Beers" asp-action="Flag" asp-route-id="@item.Id" asp-route-beerId="@item.BeerId">Flag</a>
+                    }
+                    <p>
+
+                    </p>
+                </div>
+            </div>
+            }
+            }

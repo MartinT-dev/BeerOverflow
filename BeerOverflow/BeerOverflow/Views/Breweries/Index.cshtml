@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BreweryViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+
+<style>
+    body {
+        background: url('css/images/brewery3.png')
+        fixed center no-repeat;
+        background-size: cover;
+    }
+</style>
+
+<div class="container">
+    <table class="table table-bordered" style="background-color: rgba(0,0,0, 0.4)">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="shadow-sm p-3 mb-5 bg-light rounded">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </div>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" role="button" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-primary" role="button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-primary" role="button" asp-action="Create">Create New</a>
+    }
+</p>
